@@ -141,7 +141,7 @@ const searchByName = async (req, res) => {
             if (name) {
                 matchesName = item.name.toLowerCase().includes(name.toLowerCase());
             }
-            if (name) {
+            if (region) {
               matchesRegion = item.region.toLowerCase().includes(region.toLowerCase());
             }
             if (ratingRange) {
