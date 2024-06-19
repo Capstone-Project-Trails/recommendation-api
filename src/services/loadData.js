@@ -11,6 +11,7 @@ const loadData = () => {
         name: record.place.name,
         description: record.place.description,
         region: record.place.region,
+        photo_url: record.place.photo_url,
         vicinity: record.place.vicinity,
         types: record.place.types,
         user_rating_total: parseInt(record.place.user_ratings_total) || null,
