@@ -57,8 +57,12 @@ const getRecommendations = async (req, res) => {
             };
         }).filter(item => item.distance && item.distance <= 5); // Filter by radius
 
-        nearbyRecommendations.sort((a, b) => a.distance - b.distance); // Sort by distance
-
+        nearbyRecommendations.sort((a, b) => {
+            if (a.distance === b.distance) {
+                return b.rating - a.rating; // Sort by rating if distances are equal
+            }
+            return a.distance - b.distance; // Sort by distance
+        });
         const limitedRecommendations = nearbyRecommendations.slice(0, 5);  // Limit to 5 results
 
         console.log('Nearby recommendations:', limitedRecommendations);  // Debugging line
@@ -98,8 +102,8 @@ const getRecommendations = async (req, res) => {
               types: "['tourist_attraction', 'point_of_interest', 'establishment']",
               user_rating_total: 6000,
               rating: 4.9,
-              photos: 'url1',
-              locationUrl: 'https://i2.wp.com/blog.tripcetera.com/id/wp-content/uploads/2020/03/leebudihart_76864081_2484833498431751_3194446755026370817_n.jpg',
+              photos: 'https://i2.wp.com/blog.tripcetera.com/id/wp-content/uploads/2020/03/leebudihart_76864081_2484833498431751_3194446755026370817_n.jpg',
+              locationUrl: 'https://www.google.com/maps/search/?api=1&query=-8.722624899999998,115.1695272',
               lat: -8.7183,
               lon: 115.1691
           },
@@ -162,6 +166,7 @@ const searchByName = async (req, res) => {
         const formattedResults = searchResults.map(item => ({
             title: item.name,
             place_id: item.id,
+            photos: item.photos,
             description: item.description,
             region: item.region,
             link: `https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lon}`,
