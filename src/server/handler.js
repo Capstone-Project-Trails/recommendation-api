@@ -58,12 +58,12 @@ const getRecommendations = async (req, res) => {
         }).filter(item => item.distance && item.distance <= 5); // Filter by radius
 
         nearbyRecommendations.sort((a, b) => {
-            if (a.distance === b.distance) {
-                return b.rating - a.rating; // Sort by rating if distances are equal
+            if (a.rating === b.rating) {
+                return a.distance - b.distance; // Sort by distance if ratings are equal
             }
-            return a.distance - b.distance; // Sort by distance
+            return b.rating - a.rating; // Sort by rating
         });
-        const limitedRecommendations = nearbyRecommendations.slice(0, 5);  // Limit to 5 results
+        const limitedRecommendations = nearbyRecommendations.slice(0, 10);  // Limit to 5 results
 
         console.log('Nearby recommendations:', limitedRecommendations);  // Debugging line
 
